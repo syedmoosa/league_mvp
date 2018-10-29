@@ -20,7 +20,7 @@ defmodule LeagueMvp.Mixfile do
   def application do
     [
       mod: {LeagueMvp, []},
-      extra_applications: [:logger]
+      extra_applications: [:logger, :exprotobuf]
     ]
   end
 
@@ -41,7 +41,8 @@ defmodule LeagueMvp.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
-      {:plug_cowboy, "~> 1.0"}
+      {:plug_cowboy, "~> 1.0"},
+      {:exprotobuf, "~> 1.2.9"}
     ]
   end
 

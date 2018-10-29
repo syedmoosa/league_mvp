@@ -9,8 +9,8 @@ defmodule LeagueMvp.Router do
     pipe_through :api
 
     scope "/v1", V1, as: :v1 do
-      get "/result/division/:division/season/:season/", MatchController, :show
-      get "/all_leagues", MatchController, :show_all_leagues
+      get "/result/division/:division/season/:season/:type", MatchController, :show
+      get "/all_leagues/:type", MatchController, :show_all_leagues
     end
 
   end

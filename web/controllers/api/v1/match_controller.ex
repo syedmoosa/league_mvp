@@ -4,21 +4,22 @@ defmodule LeagueMvp.Api.V1.MatchController do
   alias LeagueMvp.Match
 
 
-  def show(conn, %{"division" => division, "season"=> season}= params) do
+  def show(conn, %{"division" => division, "season"=> season, "type"=> type}= _params) do
     teams_win_stats = get_division_season(division, season, "H") |> Repo.all
     teams_draw_stats = get_division_season(division, season, "D") |> Repo.all
+
 
     # To calculate total points in league (win= 3 points, draw= 1 point)
     total_stats = calculate_points(teams_win_stats, teams_draw_stats)
     {win_points, wins, draws, team_name} = :lists.max(total_stats)
-    match =  [%{division: division, season: season,team: team_name, wins: wins, draws: draws, points: win_points}]
+    match =  %{type: type, division: division, season: season,team: team_name, wins: wins, draws: draws, points: win_points}
     render(conn, "show.json", match: match)
   end
 
 
-  def show_all_leagues(conn, _) do
+  def show_all_leagues(conn, %{"type" => type} = _params) do
     match = get_all_leagues() |> Repo.all
-    render(conn, "show_all_leagues.json", match: match)
+    render(conn, "show_all_leagues.json", %{match: match, type: type})
   end
 
 
