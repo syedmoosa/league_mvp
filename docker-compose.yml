@@ -1,0 +1,44 @@
+version: '3.6'
+
+services:
+  football:
+    image:  football
+    command: mix phx.server
+    ports:
+      - "4000"
+    environment:
+      - MIX_ENV=dev
+      - PORT=4000
+      - SERVICE_PORTS=4000
+      - DATABASE_URL=ecto://postgres:postgres@postgres/football_dev_db
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+        delay: 5s
+      restart_policy:
+        condition: on-failure
+        window: 90s
+    networks:
+      - webnet
+
+
+  proxy:
+    image: dockercloud/haproxy
+    depends_on:
+      - football
+    environment:
+      - BALANCE=leastconn
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 80:80
+    networks:
+      - webnet
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+networks:
+  webnet:
+    driver: overlay

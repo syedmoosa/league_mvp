@@ -1,6 +1,8 @@
 alias LeagueMvp.Repo
 alias LeagueMvp.Match
 
+
+
 File.stream!("./data/Data.csv")
 |> Stream.map(fn line->
   [sno, div, season, date, hometeam, awayteam, fthg, ftag, ftr, hthg, htag, htr]= line |> String.split(",")
@@ -13,3 +15,5 @@ File.stream!("./data/Data.csv")
   end
 end)
 |> Stream.run()
+
+

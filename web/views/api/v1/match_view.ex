@@ -22,7 +22,7 @@ defmodule LeagueMvp.Api.V1.MatchView do
   end
 
   def render("show_all_leagues.json", %{match: match, type: "proto"}= data) do
-    %{leagues: render_many(match, LeagueMvp.Api.V1.MatchView, "leagues_proto.json")}
+    render_many(match, LeagueMvp.Api.V1.MatchView, "leagues_proto.json")
   end
 
   def render("match.json", %{match: %{type: "json"}=match}) do
@@ -50,7 +50,6 @@ defmodule LeagueMvp.Api.V1.MatchView do
   end
 
   def render("leagues_proto.json", %{match: match})do
-    IO.inspect match.season
     result =  LeagueMvp.Api.V1.MatchView.Result.new(division: match.division, season: :erlang.integer_to_binary(match.season))
     LeagueMvp.Api.V1.MatchView.Result.encode(result)
   end
