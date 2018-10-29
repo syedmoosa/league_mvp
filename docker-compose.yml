@@ -8,7 +8,6 @@ services:
       - "4000"
     environment:
       - MIX_ENV=dev
-      - PORT=4000
       - SERVICE_PORTS=4000
       - DATABASE_URL=ecto://postgres:postgres@postgres/football_dev_db
     deploy:
